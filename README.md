@@ -31,6 +31,7 @@ Pass an agent name to target another client, or `'*'` to install for every detec
 gh repo create clhbid/NEW_REPOSITORY \
   --template clhbid/repository-template \
   --private
+gh repo edit clhbid/NEW_REPOSITORY --delete-branch-on-merge
 ```
 
-Choose the visibility and license appropriate to the new repository. Repositories created from a template receive a new, unrelated Git history; later template changes are not propagated automatically.
+Choose the visibility and license appropriate to the new repository. Repositories created from a template receive a new, unrelated Git history; later template changes are not propagated automatically. A new repository doesn't copy the template's settings either, so the `gh repo edit` line turns on deleting merged branches, which stacked pull requests need in order to retarget onto the default branch.
