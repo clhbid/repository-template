@@ -29,14 +29,12 @@ jobs:
       - name: Install agent skills
         run: ./scripts/install-agent-skills.sh github-copilot
 
-      # Pilot for clhbid/agent-context#85: Copilot's skill tool can't load ~/.agents/skills.
-      # One skill per candidate location shows which one it loads; .git/info/exclude keeps the
-      # repo copy out of commits.
+      # Copilot's skill tool loads only project skills, not ~/.agents/skills: github/copilot-cli#4401.
+      # The git exclude keeps the copies out of the agent's commits.
       - name: Expose skills to Copilot's skill tool
         run: |
-          mkdir -p ~/.copilot/skills .github/skills
-          cp -r ~/.agents/skills/open-pr ~/.copilot/skills/
-          cp -r ~/.agents/skills/writing-lean .github/skills/
+          mkdir -p .github/skills
+          cp -r ~/.agents/skills/. .github/skills/
           echo .github/skills/ >> .git/info/exclude
 
       - name: List installed skills
